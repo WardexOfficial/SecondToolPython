@@ -64,6 +64,7 @@ if check_update is True:
         exit(401)
 else:
     print(Fore.RED + 'Проверка обновлений отключена' + Fore.RESET)
+    time.sleep(1)
 
 from bin import core
 core.start()
