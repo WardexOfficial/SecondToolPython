@@ -1,5 +1,6 @@
 from colorama import Fore
 from bin import config
+from libs import base
 import time, os, configparser, sys, sqlite3, importlib.util
 
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
@@ -11,9 +12,7 @@ def start():
     try: 
         a = int(input(Fore.CYAN + f'''
 1.DDOS
-2.SEARCH
-3.MODULE`s
-4.HELP
+2.MODULE`S
 9.RESTART {Fore.YELLOW}[DEV]{Fore.CYAN}
 0.QUIT
 >>> ''' + Fore.YELLOW))
@@ -30,10 +29,11 @@ def start():
         os.execl(python_exec, python_exec, *sys.argv)
     
     if a == 1:
-        ...
+        url = input(Fore.CYAN + 'Введите ссылку>>> ' + Fore.YELLOW)
+        amount = input(Fore.CYAN + 'Введите количество запросов>>> ' + Fore.YELLOW)
+        base.ddos(url,amount)
+        exit()
     elif a == 2:
-        ...
-    elif a == 3:
         if config.LIBS_FOLDER not in sys.path:
             sys.path.append(config.LIBS_FOLDER)
 
@@ -75,9 +75,5 @@ def start():
                     print(Fore.RED + f"Ошибка при выполнении команды {command}: {e}")
             else:
                 print(Fore.RED + f"Команда '{command}' не найдена.")
-    elif a == 4:
-        print(Fore.CYAN + '''
-Help? You need help? Are you crazy?
-        ''' + Fore.RESET)
     
     exit(1)
