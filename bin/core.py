@@ -55,14 +55,19 @@ def start():
                 spec.loader.exec_module(module)
                 
                 if hasattr(module, "commands") and callable(module.commands):
-                    commands_result[lib_name] = module.commands()
+                    commands = module.commands()
+                    if isinstance(commands, dict):
+                        # Сохраняем только ключи словаря
+                        commands_result[lib_name] = list(commands.keys())
+                    else:
+                        print(f"Функция 'commands' модуля {lib_name} должна возвращать словарь.")
                 else:
                     print(f"Модуль {lib_name} не содержит функцию 'commands'.")
             except Exception as e:
                 print(f"Ошибка при обработке модуля {lib_name}: {e}")
-        
+
         for lib_name, commands in commands_result.items():
-            print(f"Команды из {lib_name}: {commands}")
+            print(f"Команды из {lib_name}: {', '.join(commands)}")
     elif a == 4:
         print(Fore.CYAN + '''
 Help? You need help? Are you crazy?
