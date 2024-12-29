@@ -40,7 +40,7 @@ def start():
         sql, cursor = config.init_database()
         cursor.execute("SELECT * FROM libs")
         libs = cursor.fetchall()
-        commands_result = {}
+        commands_registry = {}
 
         for lib in libs:
             lib_name = lib[1]
@@ -57,21 +57,27 @@ def start():
                 if hasattr(module, "commands") and callable(module.commands):
                     commands = module.commands()
                     if isinstance(commands, dict):
-                        # Сохраняем только ключи словаря
-                        commands_result[lib_name] = list(commands.keys())
+                        commands_registry.update(commands)
                     else:
-                        print(f"Ошибка при получении команд с модуля {lib_name}")
+                        print(f"Функция 'commands' модуля {lib_name} должна возвращать словарь.")
                 else:
-                    print(f"Модуль {lib_name} не содержит стандартный набор функций")
+                    print(f"Модуль {lib_name} не содержит функцию 'commands'.")
             except Exception as e:
                 print(f"Ошибка при обработке модуля {lib_name}: {e}")
 
-        for lib_name, commands in commands_result.items():
-            print(f"Модуль {lib_name}: {', '.join(commands)}")
-        
-        command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW)
-        print(Fore.RESET)
-        print(command)
+        while True:
+            command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW).strip()
+            if command == "exit":
+                print(Fore.GREEN + "Выход из программы.")
+                break
+            
+            if command in commands_registry:
+                try:
+                    commands_registry[command]()
+                except Exception as e:
+                    print(Fore.RED + f"Ошибка при выполнении команды {command}: {e}")
+            else:
+                print(Fore.RED + f"Команда '{command}' не найдена.")
     elif a == 4:
         print(Fore.CYAN + '''
 Help? You need help? Are you crazy?
