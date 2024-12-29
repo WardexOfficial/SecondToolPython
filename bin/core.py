@@ -129,8 +129,11 @@ def start():
         ''' + Fore.RESET)
         ok = input('OK>>> ')
         return restart()
-    sql.close()
-    exit(1)
+    else:
+        print(Fore.RED + 'Command not found' + Fore.RESET)
+        sql.close()
+        time.sleep(1)
+        return restart()
 
 def restart():
     return start()
