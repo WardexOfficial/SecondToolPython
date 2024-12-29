@@ -57,6 +57,7 @@ def start():
         a = int(input(Fore.CYAN + f'''
 1.DDOS
 2.MODULE`S
+3.HELP
 9.RESTART {Fore.YELLOW}[DEV]{Fore.CYAN}
 0.QUIT
 >>> ''' + Fore.YELLOW))
@@ -120,6 +121,14 @@ def start():
                     print(Fore.RED + f"Ошибка при выполнении команды {command}: {e}")
             else:
                 print(Fore.RED + f"Команда '{command}' не найдена.")
+    elif a == 3:
+        print(Fore.CYAN + '''
+Как устанавливать новые библиотеки?
+- Для этого найдите библиотеку, скопируйте на неё ссылку(файл .py) и запустите скрипт с такими аргументами:
+    python main.py --load:[ссылка на библиотеку]
+        ''' + Fore.RESET)
+        ok = input('OK>>> ')
+        return restart()
     sql.close()
     exit(1)
 
