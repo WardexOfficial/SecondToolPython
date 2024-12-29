@@ -4,8 +4,7 @@ import time, shutil, os
 
 def commands():
     return { 
-        'clearcache': clearcache,
-        'ddos': ddos
+        'clearcache': clearcache
     }
 
 def clearcache(root_dir="."):
