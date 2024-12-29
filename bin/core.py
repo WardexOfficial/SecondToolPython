@@ -106,7 +106,7 @@ def start():
         while True:
             print(Fore.GREEN + "Доступные команды:")
             for module, commands in module_commands.items():
-                print(f"Модуль {module}: {', '.join(commands)}")
+                print(f"Модуль {module}: {'\n- '.join(commands)}")
             print(Fore.YELLOW + 'delete [название модуля] - удалить модуль' + Fore.RESET)
             command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW).strip()
             if command == "exit":
