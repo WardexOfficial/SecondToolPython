@@ -60,14 +60,18 @@ def start():
                         # Сохраняем только ключи словаря
                         commands_result[lib_name] = list(commands.keys())
                     else:
-                        print(f"Функция 'commands' модуля {lib_name} должна возвращать словарь.")
+                        print(f"Ошибка при получении команд с модуля {lib_name}")
                 else:
-                    print(f"Модуль {lib_name} не содержит функцию 'commands'.")
+                    print(f"Модуль {lib_name} не содержит стандартный набор функций")
             except Exception as e:
                 print(f"Ошибка при обработке модуля {lib_name}: {e}")
 
         for lib_name, commands in commands_result.items():
-            print(f"Команды из {lib_name}: {', '.join(commands)}")
+            print(f"Модуль {lib_name}: {', '.join(commands)}")
+        
+        command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW)
+        print(Fore.RESET)
+        print(command)
     elif a == 4:
         print(Fore.CYAN + '''
 Help? You need help? Are you crazy?
