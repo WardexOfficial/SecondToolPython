@@ -107,10 +107,15 @@ def start():
             print(Fore.GREEN + "Доступные команды:")
             for module, commands in module_commands.items():
                 print(f"Модуль {module}: {', '.join(commands)}")
+            print(Fore.YELLOW + 'delete [название модуля] - удалить модуль' + Fore.RESET)
             command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW).strip()
             if command == "exit":
                 print(Fore.GREEN + "Выход из программы.")
                 break
+            elif 'delete' in command:
+                module_name = command.split(' ')[1]
+                print(module_name)
+                input()
             if command in commands_registry:
                 try:
                     commands_registry[command]()
