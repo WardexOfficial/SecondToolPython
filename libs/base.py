@@ -10,4 +10,4 @@ def commands():
 def clearcache():
     print(Fore.GREEN + 'Cache cleared!' + Fore.RESET)
     time.sleep(1)
-    start()
+    return start()
