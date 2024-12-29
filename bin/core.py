@@ -114,8 +114,22 @@ def start():
                 break
             elif 'delete' in command:
                 module_name = command.split(' ')[1]
-                print(module_name)
-                input()
+                is_true = False
+                for module, commands in module_commands.items():
+                    if str(module) == str(module_name):
+                        is_true = True
+                if is_true is True:
+                    sql, cursor = config.init_database()
+                    cursor.execute("DELETE FROM libs WHERE name = ?",(module_name,))
+                    sql.commit()
+                    sql.close()
+                    file_path = f'libs/{module_name}.py'
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
+                else:
+                    print(Fore.RED + 'Модуль не найден!' + Fore.RESET)
+                    time.sleep(2)
+                    return restart()
             if command in commands_registry:
                 try:
                     commands_registry[command]()
