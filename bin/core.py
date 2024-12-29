@@ -126,6 +126,9 @@ def start():
                     file_path = f'libs/{module_name}.py'
                     if os.path.exists(file_path):
                         os.remove(file_path)
+                    print(Fore.GREEN + 'Модуль удален!' + Fore.RESET)
+                    time.sleep(2)
+                    return restart()
                 else:
                     print(Fore.RED + 'Модуль не найден!' + Fore.RESET)
                     time.sleep(2)
