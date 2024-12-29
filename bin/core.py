@@ -150,7 +150,7 @@ def start():
 - Для этого найдите библиотеку, скопируйте на неё ссылку(файл .py) и запустите скрипт с такими аргументами:
     python main.py --load [ссылка на библиотеку]
         ''' + Fore.RESET)
-        ok = input('OK>>> ')
+        ok = input(Fore.YELLOW + 'OK>>> ' + Fore.RESET)
         return restart()
     else:
         print(Fore.RED + 'Command not found' + Fore.RESET)

@@ -27,8 +27,18 @@ def commands():
     return { 
         'enable --checkupdate': enable_check_update,
         'disable --checkupdate': disable_check_update,
+        'core --version': core_version,
         'clearcache': clearcache
     }
+
+def core_version():
+    cnf = configparser.ConfigParser()
+    cnf.read('config.ini')
+    version = cnf["core"]["version"]
+    package = cnf["core"]["package"]
+    print(Fore.CYAN + f'Core version: {version} ({package})' + Fore.RESET)
+    input(Fore.YELLOW + 'OK>>> ' + Fore.RESET)
+    return restart()
 
 def enable_check_update():
     cnf.set('into', 'check_update', 'true')
