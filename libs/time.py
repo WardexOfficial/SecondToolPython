@@ -1,13 +1,14 @@
 from colorama import Fore
 from bin.core import start
-import time, datetime
+from datetime import datetime
+import time
 
 def commands():
     return {
-        'year': get_year
+        'datetime': get_datetime
     }
 
-def get_year():
-    print(Fore.GREEN + '2024' + Fore.RESET)
+def get_datetime():
+    print(Fore.GREEN + datetime.now().strftime("%Y.%m.%d %H:%M:%S") + Fore.RESET)
     time.sleep(1)
     return start()
