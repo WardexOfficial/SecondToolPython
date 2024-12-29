@@ -1,6 +1,10 @@
 from colorama import Fore
 from bin import config
-import time, os, configparser, sys, sqlite3, importlib.util, requests, concurrent.futures
+import time, os, configparser, sys, sqlite3, importlib.util, requests, concurrent.futures, argparse
+
+cnf = configparser.ConfigParser()
+cnf.read('config.ini')
+core_version = cnf["core"]["version"]
 
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
 def ddos(url, amount):
@@ -12,9 +16,41 @@ def ddos(url, amount):
             a+=1
     print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
     return time.sleep(4)
+def download_lib(url, save_path, file_name):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            
+            with open(save_path, 'wb') as file:
+                file.write(response.content) 
+            
+            sql, cursor = config.init_database()
+            cursor.execute("INSERT INTO libs (name, version) VALUES (?,?)",(file_name, core_version))
+            sql.commit()
+            sql.close()
+
+            print(Fore.GREEN + f"Модуль успешно загружен {save_path}" + Fore.RESET)
+            print('Перезапуск скрипта...')
+            time.sleep(1)
+            python_exec = sys.executable
+            os.execl(python_exec, python_exec, *sys.argv)
+        else:
+            print(f"Ошибка при загрузке файла: {response.status_code}")
+    except Exception as e:
+        print(f"Произошла ошибка при запросе: {e}")
 
 def start():
     clear()
+
+    parser = argparse.ArgumentParser(description="Main script")
+    parser.add_argument('--load', type=str, help='Загрузить библиотеку из ссылки', required=False)
+    args = parser.parse_args()
+    if args.load:
+        file_name = os.path.basename(url)
+        save_path = os.path.join('libs', file_name)
+        download_lib(args.load, save_path, file_name)
+
     print(Fore.YELLOW + config.LOGO)
     print('SecondTool presents\nhttps://t.me/SecondToolChannel' + Fore.RESET)
     try: 
@@ -84,7 +120,7 @@ def start():
                     print(Fore.RED + f"Ошибка при выполнении команды {command}: {e}")
             else:
                 print(Fore.RED + f"Команда '{command}' не найдена.")
-    
+    sql.close()
     exit(1)
 
 def restart():
