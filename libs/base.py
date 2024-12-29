@@ -1,5 +1,5 @@
 from colorama import Fore
-from bin.core import start
+from bin.core import restart
 import time, shutil, os, requests, concurrent.futures
 
 def commands():
@@ -16,7 +16,7 @@ def clearcache(root_dir="."):
                 print(f"Удалена папка: {pycache_path}")
     print(Fore.GREEN + 'Cache cleared!' + Fore.RESET)
     time.sleep(1)
-    return start()
+    return restart()
 
 def ddos(url,amount):
     with concurrent.futures.ThreadPoolExecutor() as executor:

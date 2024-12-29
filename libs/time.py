@@ -1,5 +1,5 @@
 from colorama import Fore
-from bin.core import start
+from bin.core import restart
 from datetime import datetime
 import time
 
@@ -11,4 +11,4 @@ def commands():
 def get_datetime():
     print(Fore.GREEN + datetime.now().strftime("%Y.%m.%d %H:%M:%S") + Fore.RESET)
     time.sleep(1)
-    return start()
+    return restart()

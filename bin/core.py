@@ -77,3 +77,6 @@ def start():
                 print(Fore.RED + f"Команда '{command}' не найдена.")
     
     exit(1)
+
+def restart():
+    return start()
