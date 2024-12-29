@@ -5,6 +5,7 @@ import time, os, configparser, sys
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
 
 def start():
+    clear()
     print(Fore.YELLOW + config.LOGO)
     print('SecondTool presents' + Fore.RESET)
     try: 
