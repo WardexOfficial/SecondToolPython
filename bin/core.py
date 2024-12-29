@@ -108,7 +108,6 @@ def start():
             for module, commands in module_commands.items():
                 print(f"Модуль {module}: {', '.join(commands)}")
             print(Fore.YELLOW + 'delete [название модуля] - удалить модуль' + Fore.RESET)
-            print(1)
             command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW).strip()
             if command == "exit":
                 print(Fore.GREEN + "Выход из программы.")
