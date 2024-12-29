@@ -41,36 +41,33 @@ def start():
         cursor.execute("SELECT * FROM libs")
         libs = cursor.fetchall()
         commands_registry = {}
+        module_commands = {}
 
         for lib in libs:
             lib_name = lib[1]
             lib_path = os.path.join(config.LIBS_FOLDER, f"{lib_name}.py")
             try:
                 if not os.path.exists(lib_path):
-                    print(f"Файл {lib_path} для модуля {lib_name} не найден.")
                     continue
-                
                 spec = importlib.util.spec_from_file_location(lib_name, lib_path)
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
-                
                 if hasattr(module, "commands") and callable(module.commands):
                     commands = module.commands()
                     if isinstance(commands, dict):
                         commands_registry.update(commands)
-                    else:
-                        print(f"Функция 'commands' модуля {lib_name} должна возвращать словарь.")
-                else:
-                    print(f"Модуль {lib_name} не содержит функцию 'commands'.")
+                        module_commands[lib_name] = list(commands.keys())
             except Exception as e:
-                print(f"Ошибка при обработке модуля {lib_name}: {e}")
+                print(Fore.RED + f"Ошибка с модулем {lib_name}: {e}")
 
         while True:
+            print(Fore.GREEN + "Доступные команды:")
+            for module, commands in module_commands.items():
+                print(f"Модуль {module}: {', '.join(commands)}")
             command = input(Fore.CYAN + 'Enter command>>> ' + Fore.YELLOW).strip()
             if command == "exit":
                 print(Fore.GREEN + "Выход из программы.")
                 break
-            
             if command in commands_registry:
                 try:
                     commands_registry[command]()
