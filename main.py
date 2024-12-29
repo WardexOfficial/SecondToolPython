@@ -35,8 +35,12 @@ cnf = configparser.ConfigParser()
 cnf.read('config.ini')
 check_update = cnf["into"]["check_update"].lower() == 'true'
 use_git = cnf["into"]["use_git"].lower() == 'true'
+is_started = cnf["into"]["is_started"].lower() == 'true'
 
-if check_update is True:
+if check_update is True and is_started is False:
+    cnf.set('into', 'is_started', 'true')
+    with open('config.ini', 'w') as configfile:
+        cnf.write(configfile)
     if use_git is True:
         try:
             repo_path = os.path.dirname(os.path.abspath(__file__))
