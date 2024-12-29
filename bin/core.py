@@ -26,7 +26,7 @@ def download_lib(url, save_path, file_name):
                 file.write(response.content) 
             
             sql, cursor = config.init_database()
-            cursor.execute("INSERT INTO libs (name, version) VALUES (?,?)",(file_name, core_version))
+            cursor.execute("INSERT INTO libs (name, version) VALUES (?,?)",(file_name.split('.')[0], core_version))
             sql.commit()
             sql.close()
 
