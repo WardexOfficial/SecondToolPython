@@ -114,6 +114,10 @@ def start():
                 break
             elif 'delete' in command:
                 module_name = command.split(' ')[1]
+                if module_name == 'base' or module_name == 'time':
+                    print(Fore.RED + 'Невозможно удалить базовые модули, так как они используються программой!' + Fore.RESET)
+                    time.sleep(2)
+                    return restart()
                 is_true = False
                 for module, commands in module_commands.items():
                     if str(module) == str(module_name):
