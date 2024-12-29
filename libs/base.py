@@ -1,6 +1,6 @@
 from colorama import Fore
 from bin.core import restart
-import time, shutil, os, configparser, subprocess
+import time, shutil, os, configparser, subprocess, sys
 
 cnf = configparser.ConfigParser()
 cnf.read('config.ini')
