@@ -32,7 +32,7 @@ def start():
         url = input(Fore.CYAN + 'Введите ссылку>>> ' + Fore.YELLOW)
         amount = input(Fore.CYAN + 'Введите количество запросов>>> ' + Fore.YELLOW)
         base.ddos(url,amount)
-        exit()
+        return start()
     elif a == 2:
         if config.LIBS_FOLDER not in sys.path:
             sys.path.append(config.LIBS_FOLDER)

