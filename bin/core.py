@@ -31,10 +31,7 @@ def download_lib(url, save_path, file_name):
             sql.close()
 
             print(Fore.GREEN + f"Модуль успешно загружен {save_path}" + Fore.RESET)
-            print('Перезапуск скрипта...')
-            time.sleep(1)
-            python_exec = sys.executable
-            os.execl(python_exec, python_exec, *sys.argv)
+            exit(1)
         else:
             print(f"Ошибка при загрузке файла: {response.status_code}")
     except Exception as e:
