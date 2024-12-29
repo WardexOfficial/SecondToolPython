@@ -16,7 +16,7 @@ def ddos(url, amount):
 def start():
     clear()
     print(Fore.YELLOW + config.LOGO)
-    print('SecondTool presents' + Fore.RESET)
+    print('SecondTool presents\nhttps://t.me/SecondToolChannel' + Fore.RESET)
     try: 
         a = int(input(Fore.CYAN + f'''
 1.DDOS
