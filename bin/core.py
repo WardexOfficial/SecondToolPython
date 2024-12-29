@@ -47,7 +47,7 @@ def start():
     parser.add_argument('--load', type=str, help='Загрузить библиотеку из ссылки', required=False)
     args = parser.parse_args()
     if args.load:
-        file_name = os.path.basename(url)
+        file_name = os.path.basename(args.load)
         save_path = os.path.join('libs', file_name)
         download_lib(args.load, save_path, file_name)
 
