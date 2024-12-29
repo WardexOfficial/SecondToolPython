@@ -9,7 +9,7 @@ def ddos(url, amount):
         for future in concurrent.futures.as_completed(futures):
             print(Fore.BLUE + f"Ответ от {url}: {future.result().status_code}" + Fore.RESET)
     print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
-
+    return time.sleep(4)
 
 def start():
     clear()
