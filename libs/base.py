@@ -24,9 +24,7 @@ def install_dependencies():
         print(f"Ошибка: {e}")
 
 def commands():
-    return { 
-        'enable --checkupdate': enable_check_update,
-        'disable --checkupdate': disable_check_update,
+    return {
         'core --version': core_version,
         'clearcache': clearcache
     }
@@ -38,22 +36,6 @@ def core_version():
     package = cnf["core"]["package"]
     print(Fore.CYAN + f'Core version: {version} ({package})' + Fore.RESET)
     input(Fore.YELLOW + 'OK>>> ' + Fore.RESET)
-    return restart()
-
-def enable_check_update():
-    cnf.set('into', 'check_update', 'true')
-    with open('config.ini', 'w') as configfile:
-        cnf.write(configfile)
-    print(Fore.GREEN + 'Проверка обновлений включена!' + Fore.RESET)
-    time.sleep(2)
-    return restart()
-
-def disable_check_update():
-    cnf.set('into', 'check_update', 'false')
-    with open('config.ini', 'w') as configfile:
-        cnf.write(configfile)
-    print(Fore.GREEN + 'Проверка обновлений отключена!' + Fore.RESET)
-    time.sleep(2)
     return restart()
 
 def clearcache(root_dir="."):
