@@ -55,21 +55,16 @@ def start():
 1.DDOS
 2.MODULE`S
 3.HELP
-9.RESTART {Fore.YELLOW}[DEV]{Fore.CYAN}
 0.QUIT
 >>> ''' + Fore.YELLOW))
     except ValueError:
         print(Fore.RED + 'FATAL ERROR' + Fore.RESET)
         time.sleep(3)
         clear()
-        start()
+        exit()
     
     if a == 0:
         exit(1)
-    elif a == 9:
-        python_exec = sys.executable
-        os.execl(python_exec, python_exec, *sys.argv)
-    
     if a == 1:
         print(Fore.RED + 'ВНИМАНИЕ! Процесс DDOSa отменить будет невозможно!')
         url = input(Fore.CYAN + 'Введите ссылку>>> ' + Fore.YELLOW)

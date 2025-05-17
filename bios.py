@@ -87,6 +87,10 @@ def start():
     print(Fore.CYAN + 'enter help for help')
     print(Fore.YELLOW + 'Для запуска утилиты нажмите ENTER')
 
+    skip_bios = cnf["into"]["skip_bios"].lower() == 'true'
+    if skip_bios == True:
+        return main()
+
     while True:
         command = input(Fore.CYAN + 'command>>> ' + Fore.YELLOW)
 

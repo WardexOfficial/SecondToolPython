@@ -47,4 +47,5 @@ def clearcache(root_dir="."):
                 print(f"Удалена папка: {pycache_path}")
     print(Fore.GREEN + 'Cache cleared!' + Fore.RESET)
     time.sleep(1)
+    input(Fore.YELLOW + 'OK>>> ' + Fore.RESET)
     return restart()
