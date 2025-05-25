@@ -10,9 +10,6 @@ cnf.read('config.ini')
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
 
 def main():
-    if config.CHECK_PIP_LIBS is True:
-        base.install_dependencies()
-
     from colorama import Fore, init
     from git import Repo
     init()
