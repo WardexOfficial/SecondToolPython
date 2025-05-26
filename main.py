@@ -17,7 +17,7 @@ except subprocess.CalledProcessError as e:
 except Exception as e:
     print(f"Ошибка: {e}")
 
-import bios
+import bin.bios as bios
 print('SecondTool present`s')
 print('core objective')
 bios.start()
