@@ -9,7 +9,7 @@ cnf.read('config.ini')
 
 def clear(): os.system('cls' if os.name == 'nt' else 'clear')
 
-def main():
+def main(): 
     from colorama import Fore, init
     from git import Repo
     init()
@@ -20,6 +20,7 @@ def main():
     check_update = cnf["into"]["check_update"].lower() == 'true'
     use_git = cnf["into"]["use_git"].lower() == 'true'
     is_started = cnf["into"]["is_started"].lower() == 'true'
+    is_debug = cnf['core']['debug'].lower() == 'true'
 
     if check_update is True:
         if is_started is False:
@@ -68,6 +69,9 @@ def main():
         time.sleep(1)
 
     from bin import core
+    if is_debug:
+        core.handler('init')
+        core.handler('info', 'DEBUG включён')
     core.start()
     exit()
 

